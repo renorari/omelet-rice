@@ -8,9 +8,9 @@ client.on("ready", () => {
     activity: {
       name: `om!help | ${client.guilds.cache.size}servers ${client.users.cache.size}member`
     },
-    status: "dnd"
+    status: "online"
   });
-  console.log("Bot is OK!");
+  console.log(client.user.tag + " is OK!");
 });
 
 //Comannds
@@ -23,7 +23,7 @@ client.on("message", message => {
   }
 });
 
-client.login(process.env.DISCORD_BOT_TOKEN + "tintin"); //エラー吐かない...
+client.login(process.env.DISCORD_BOT_TOKEN);
 
 //--------------------//
 
