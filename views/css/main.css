@@ -4,9 +4,13 @@ body {
 }
 
 a {
-  color: #f02016
+  color: #f02016;
 }
 
 h1 {
   text-align: center;
+}
+
+.question {
+  color: #a01008;
 }
