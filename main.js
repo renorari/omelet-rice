@@ -1,25 +1,31 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const http = require("http");
+const fs = require("fs");
 
-client.on('ready', () => {
+client.on("ready", () => {
+  client.user.setPresence({
+    activity: {
+      name: `om!help | ${client.guilds.cache.size}servers ${client.users.cache.size}member`
+    },
+    status: "dnd"
+  });
   console.log("Bot is OK!");
 });
-//Comannds
-client.on('message', message => {
-  var m = message.content
-  if (m == "om!help") {
-    message.channel.send("準備中...")
-  } else if (m == "om!ping") {
-    message.channel.send(`現在のBotのPing値は、${client.ws.ping}msです。`)
-  }
-})
 
-client.login(process.env.omkey);
+//Comannds
+client.on("message", message => {
+  var m = message.content;
+  if (m == "om!help") {
+    message.channel.send("準備中...");
+  } else if (m == "om!ping") {
+    message.channel.send(`現在のBotのPing値は、${client.ws.ping}msです。`); //ここだなぜ？
+  }
+});
+
+client.login(process.env.DISCORD_BOT_TOKEN + "tintin"); //エラー吐かない...
 
 //--------------------//
-
-var http = require("http");
-var fs = require("fs");
 
 function getType(_url) {
   var types = {
@@ -61,5 +67,5 @@ var server = http.createServer(function(req, res) {
 
 var port = process.env.PORT || 3000;
 server.listen(port, function() {
-  console.log("Web is OK!")
+  console.log("Web is OK!");
 });
