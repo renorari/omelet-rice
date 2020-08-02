@@ -11,6 +11,14 @@ client.on("ready", () => {
     status: "online"
   });
   console.log(client.user.tag + " is OK!");
+  client.channels.cache
+    .get("739472966060081236")
+    .send("https://omelet-rice.glitch.me/");
+  setInterval(function() {
+    client.channels.cache
+      .get("739472966060081236")
+      .send("https://omelet-rice.glitch.me/");
+  }, 60000);
 });
 
 //Comannds
