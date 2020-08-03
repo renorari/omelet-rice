@@ -90,7 +90,7 @@ client.on("message", message => {
 
 //グローバルチャット
 client.on("message", message => {
-  if (message.author.id == client.user.id && message.embeds) return;
+  if (message.author.id == client.user.id && message.embeds.length) return;
   if (message.channel.name == "ome-chat") {
     const file = message.attachments.first();
     var embed;
