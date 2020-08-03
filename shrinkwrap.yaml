@@ -1,5 +1,6 @@
 dependencies:
   discord.js: 12.2.0
+  node-fetch: 2.6.0
 packages:
   /@discordjs/collection/0.1.6:
     dev: false
@@ -120,3 +121,4 @@ shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
   discord.js: ^12.2.0
+  node-fetch: ^2.6.0

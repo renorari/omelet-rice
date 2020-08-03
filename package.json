@@ -4,7 +4,8 @@
   "description": "オム丼Bot",
   "main": "main.js",
   "dependencies": {
-    "discord.js": "^12.2.0"
+    "discord.js": "^12.2.0",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {},
   "scripts": {

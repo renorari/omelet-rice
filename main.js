@@ -1,7 +1,9 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const http = require("http");
+const https = require("https");
 const fs = require("fs");
+const fetch = require("node-fetch");
 
 client.on("ready", () => {
   client.user.setPresence({
@@ -143,28 +145,44 @@ client.on("message", message => {
         }
       };
     } else if (file.height) {
-      embed = {
-        embed: {
-          description: message.content,
-          color: 0xf0f016,
-          timestamp: new Date(),
-          footer: {
-            icon_url: gicon,
-            text: message.guild.name
-          },
-          thumbnail: {
-            url: avatar
-          },
-          author: {
-            name: message.author.tag,
-            url: "https://discord.com/users/" + message.author.id,
-            icon_url: avatar
-          },
-          image: {
-            url: file.url
-          }
-        }
-      };
+      var base64;
+      fetch(file.url)
+        .then(res => res.buffer())
+        .then(buffer => {
+          base64 = buffer.toString("base64");
+        });
+      var rss = "";
+      var req = https.get("https://api.midokuriserver.com/viruscheck.php?checktarget="+base64, function(res) {
+        res.setEncoding("utf8");
+        res.on("data", function(json) {
+          rss += json;
+        });
+        res.on("end", function() {
+          
+          embed = {
+            embed: {
+              description: message.content,
+              color: 0xf0f016,
+              timestamp: new Date(),
+              footer: {
+                icon_url: gicon,
+                text: message.guild.name
+              },
+              thumbnail: {
+                url: avatar
+              },
+              author: {
+                name: message.author.tag,
+                url: "https://discord.com/users/" + message.author.id,
+                icon_url: avatar
+              },
+              image: {
+                url: file.url
+              }
+            }
+          };
+        });
+      });
     } else if (file) {
       embed = {
         embed: {
