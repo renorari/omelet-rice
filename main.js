@@ -28,6 +28,10 @@ client.on("message", message => {
     message.channel.send("申し訳ございません。\n現在、準備中です。");
   } else if (m == "om!ping") {
     message.channel.send(`現在のBotのPing値は、${client.ws.ping}msです。`);
+  } else if (m == "om!invite") {
+    message.channel.send(
+      "招待リンクはこちらです。\nhttps://omelet-rice.glitch.me/"
+    );
   }
 });
 
@@ -86,8 +90,8 @@ client.on("message", message => {
 
 //グローバルチャット
 client.on("message", message => {
-  if (message.author.id == client.user.id) return;
-  if (message.channel.name == "omu-chat") {
+  if (message.author.id == client.user.id && message.embeds) return;
+  if (message.channel.name == "ome-chat") {
     const file = message.attachments.first();
     var embed;
     var avatar = message.author.avatarURL({
@@ -186,7 +190,7 @@ client.on("message", message => {
       };
     }
     client.channels.cache.forEach(channel => {
-      if (channel.name == "omu-chat" && channel.type == "text") {
+      if (channel.name == "ome-chat" && channel.type == "text") {
         channel.send(embed);
         message.react("☑");
         if (!file) message.delete();
