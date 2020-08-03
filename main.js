@@ -71,7 +71,7 @@ client.on("message", message => {
           },
           fields: [
             {
-              name: "独自ドメインの取得なら１円～の【お名前.com】",
+              name: "独自ドメインの取得なら１千万円～の【お名前.com】",
               value: array[Math.floor(Math.random() * array.length)]
             }
           ]
@@ -91,7 +91,7 @@ client.on("message", message => {
         },
         fields: [
           {
-            name: "独自ドメインの取得なら１円～の【お名前.com】",
+            name: "独自ドメインの取得なら１千万円～の【お名前.com】",
             value: array[Math.floor(Math.random() * array.length)]
           }
         ]
