@@ -83,6 +83,65 @@ client.on("message", message => {
     });
   }
 });
+
+//グローバルチャット
+client.on("message", message => {
+  if (message.author.id == client.user.id) return;
+  if (message.channel.name == "omu-chat") {
+    const file = message.attachments.first();
+    var embed;
+    var avatar = message.author.avatarURL({
+      format: "png",
+      dynamic: true,
+      size: 1024
+    });
+    var gicon = message.guild.iconURL({
+      format: "png",
+      dynamic: true,
+      size: 512
+    });
+    if (
+      message.author.avatarURL({
+        format: "png",
+        dynamic: true,
+        size: 1024
+      }) == null
+    ) {
+      avatar = "https://cdn.discordapp.com/embed/avatars/0.png";
+    }
+    if (
+      message.guild.iconURL({
+        format: "png",
+        dynamic: true,
+        size: 512
+      }) == null
+    ) {
+      gicon = "https://cdn.discordapp.com/embed/avatars/0.png";
+    }
+    if (!file) {
+      embed = {
+        embed: {
+          description: message.content,
+          color: 0xf0f016,
+          timestamp: new Date(),
+          footer: {
+            icon_url: gicon,
+            text: message.guild.name
+          },
+          thumbnail: {
+            url: avatar
+          },
+          author: {
+            name: message.author.tag,
+            url: "https://discord.com/user/"+message.author.id,
+            icon_url: "avatar"
+          }
+        }
+      };
+    }
+  }
+});
+
 client.login(process.env.DISCORD_BOT_TOKEN);
 
 //--------------------//
