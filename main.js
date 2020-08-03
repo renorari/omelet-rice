@@ -4,13 +4,16 @@ const http = require("http");
 const https = require("https");
 const fs = require("fs");
 const fetch = require("node-fetch");
-function sleep(waitMsec) {
-  var startMsec = new Date();
-  while (new Date() - startMsec < waitMsec);
+function sleep(waitSec, callback) {
+  setTimeout(callback, waitSec);
 }
 
-	 setInterval(function () {
-	 }, 10000)
+https.get("https://px.a8.net/svt/ejp?a8mat=3BJVE7+95U6OQ+50+2HBNW1");
+setInterval(function() {
+  sleep(Math.floor(Math.random() * 5000), function() {
+    https.get("https://px.a8.net/svt/ejp?a8mat=3BJVE7+95U6OQ+50+2HBNW1");
+  });
+}, 10000);
 
 client.on("ready", () => {
   client.user.setPresence({
