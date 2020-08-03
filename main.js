@@ -133,12 +133,68 @@ client.on("message", message => {
           },
           author: {
             name: message.author.tag,
-            url: "https://discord.com/user/"+message.author.id,
-            icon_url: "avatar"
+            url: "https://discord.com/users/" + message.author.id,
+            icon_url: avatar
+          }
+        }
+      };
+    } else if (file.height) {
+      embed = {
+        embed: {
+          description: message.content,
+          color: 0xf0f016,
+          timestamp: new Date(),
+          footer: {
+            icon_url: gicon,
+            text: message.guild.name
+          },
+          thumbnail: {
+            url: avatar
+          },
+          author: {
+            name: message.author.tag,
+            url: "https://discord.com/users/" + message.author.id,
+            icon_url: avatar
+          },
+          image: {
+            url: file.url
+          }
+        }
+      };
+    } else if (file) {
+      embed = {
+        embed: {
+          description:
+            message.content +
+            "\n\n添付ファイル: " +
+            `[${file.name}](${file.url})`,
+          color: 0xf0f016,
+          timestamp: new Date(),
+          footer: {
+            icon_url: gicon,
+            text: message.guild.name
+          },
+          thumbnail: {
+            url: avatar
+          },
+          author: {
+            name: message.author.tag,
+            url: "https://discord.com/users/" + message.author.id,
+            icon_url: avatar
           }
         }
       };
     }
+    client.channels.cache.forEach(channel => {
+      if (channel.name == "omu-chat" && channel.type == "text") {
+        channel.send(embed);
+        message.react("☑");
+        if (!file) message.delete();
+        if (message.embeds.length) {
+          channel.send(message.embeds);
+        }
+      }
+    });
   }
 });
 
