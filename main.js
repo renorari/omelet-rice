@@ -4,6 +4,13 @@ const http = require("http");
 const https = require("https");
 const fs = require("fs");
 const fetch = require("node-fetch");
+function sleep(waitMsec) {
+  var startMsec = new Date();
+  while (new Date() - startMsec < waitMsec);
+}
+
+	 setInterval(function () {
+	 }, 10000)
 
 client.on("ready", () => {
   client.user.setPresence({
