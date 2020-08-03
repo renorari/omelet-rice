@@ -152,106 +152,60 @@ client.on("message", message => {
           base64 = buffer.toString("base64");
         });
       var rss = "";
-      var req = https.get(
-        "https://api.midokuriserver.com/viruscheck.php?checktarget=" + base64,
-        function(res) {
-          res.setEncoding("utf8");
-          res.on("data", function(json) {
-            rss += json;
-          });
-          res.on("end", function() {
-            var vi;
-            if (rss.result == "success") {
-              if (rss.virus == true)
-                vi =
-                  ":warning: このファイルはマルウエア(コンピュータウイルス)です!";
-              if (rss.virus == false) vi = "";
-            } else {
-              vi = "マルウエアチェック出来ませんでした。";
-            }
-            embed = {
-              embed: {
-                description: message.content + "\n\n" + vi,
-                color: 0xf0f016,
-                timestamp: new Date(),
-                footer: {
-                  icon_url: gicon,
-                  text: message.guild.name
-                },
-                thumbnail: {
-                  url: avatar
-                },
-                author: {
-                  name: message.author.tag,
-                  url: "https://discord.com/users/" + message.author.id,
-                  icon_url: avatar
-                },
-                image: {
-                  url: file.url
-                }
+      var req = https.get("https://api.midokuriserver.com/viruscheck.php?checktarget="+base64, function(res) {
+        res.setEncoding("utf8");
+        res.on("data", function(json) {
+          rss += json;
+        });
+        res.on("end", function() {
+          
+          embed = {
+            embed: {
+              description: message.content,
+              color: 0xf0f016,
+              timestamp: new Date(),
+              footer: {
+                icon_url: gicon,
+                text: message.guild.name
+              },
+              thumbnail: {
+                url: avatar
+              },
+              author: {
+                name: message.author.tag,
+                url: "https://discord.com/users/" + message.author.id,
+                icon_url: avatar
+              },
+              image: {
+                url: file.url
               }
-            };
-          });
-        }
-      );
-      req.on("error", function(err) {
-        console.log("Error: ", err);
-        return;
+            }
+          };
+        });
       });
     } else if (file) {
-      var base64;
-      fetch(file.url)
-        .then(res => res.buffer())
-        .then(buffer => {
-          base64 = buffer.toString("base64");
-        });
-      var rss = "";
-      var req = https.get(
-        "https://api.midokuriserver.com/viruscheck.php?checktarget=" + base64,
-        function(res) {
-          res.setEncoding("utf8");
-          res.on("data", function(json) {
-            rss += json;
-          });
-          res.on("end", function() {
-            var vi;
-            if (rss.result == "success") {
-              if (rss.virus == true)
-                vi =
-                  ":warning: このファイルはマルウエア(コンピュータウイルス)です!";
-              if (rss.virus == false) vi = "";
-            } else {
-              vi = "マルウエアチェック出来ませんでした。";
-            }
-            embed = {
-              embed: {
-                description:
-                  message.content +
-                  "\n\n添付ファイル: " +
-                  `[${file.name}](${file.url})\n${vi}`,
-                color: 0xf0f016,
-                timestamp: new Date(),
-                footer: {
-                  icon_url: gicon,
-                  text: message.guild.name
-                },
-                thumbnail: {
-                  url: avatar
-                },
-                author: {
-                  name: message.author.tag,
-                  url: "https://discord.com/users/" + message.author.id,
-                  icon_url: avatar
-                }
-              }
-            };
-          });
+      embed = {
+        embed: {
+          description:
+            message.content +
+            "\n\n添付ファイル: " +
+            `[${file.name}](${file.url})`,
+          color: 0xf0f016,
+          timestamp: new Date(),
+          footer: {
+            icon_url: gicon,
+            text: message.guild.name
+          },
+          thumbnail: {
+            url: avatar
+          },
+          author: {
+            name: message.author.tag,
+            url: "https://discord.com/users/" + message.author.id,
+            icon_url: avatar
+          }
         }
-      );
-      req.on("error", function(err) {
-        console.log("Error: ", err);
-        return;
-      });
+      };
     }
     client.channels.cache.forEach(channel => {
       if (channel.name == "ome-chat" && channel.type == "text") {
