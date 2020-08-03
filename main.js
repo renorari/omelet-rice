@@ -6,9 +6,9 @@ const fs = require("fs");
 client.on("ready", () => {
   client.user.setPresence({
     activity: {
-      name: `om!help | ${client.guilds.cache.size}servers ${client.users.cache.size}member`
+      name: `om!help | ${client.guilds.cache.size}servers | ${client.users.cache.size}member`
     },
-    status: "online"
+    status: "idle"
   });
   console.log(client.user.tag + " is OK!");
   client.channels.cache
