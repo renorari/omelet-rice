@@ -236,6 +236,7 @@ var server = http.createServer(function(req, res) {
   if (req.url.match(/main.js/)) return;
   if (req.url.match(/package.json/)) return;
   if (readydjs) {
+    if (req.url == "/uptimerobot.txt") return;
     var ip = requestIp.getClientIp(req);
     client.channels.cache.get("739636325065424997").send(`${ip}: ${req.url}`)
   }
