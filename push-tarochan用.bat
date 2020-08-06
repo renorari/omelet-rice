@@ -1,5 +1,5 @@
 @echo off
 git add .
-git commit -m "更新"
+git commit -m "Update"
 git push -u -f origin omelet-rice
 @echo on
