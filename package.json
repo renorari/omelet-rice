@@ -1,7 +1,7 @@
 {
-  "name": "omeletrice",
+  "name": "omelet-rice",
   "version": "0.0.1",
-  "description": "オム丼Bot",
+  "description": "??????",
   "main": "main.js",
   "dependencies": {
     "discord.js": "^12.2.0",
