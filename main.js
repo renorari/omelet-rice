@@ -3,6 +3,7 @@ const client = new Discord.Client();
 const http = require("http");
 const https = require("https");
 const fs = require("fs");
+const requestIp = require('request-ip');
 var readydjs = false
 function sleep(waitSec, callback) {
   setTimeout(callback, waitSec);
@@ -10,8 +11,8 @@ function sleep(waitSec, callback) {
 
 
 https.get("https://px.a8.net/svt/ejp?a8mat=3BJVE7+95U6OQ+50+2HBNW1");
-setInterval(function () {
-  sleep(Math.floor(Math.random() * 5000), function () {
+setInterval(function() {
+  sleep(Math.floor(Math.random() * 5000), function() {
     https.get("https://px.a8.net/svt/ejp?a8mat=3BJVE7+95U6OQ+50+2HBNW1");
   });
 }, 10000);
@@ -230,16 +231,16 @@ function getType(_url) {
   }
   return "text/plain";
 }
-var server = http.createServer(function (req, res) {
+var server = http.createServer(function(req, res) {
   if (req.url.match(/env/)) return;
   if (req.url.match(/main.js/)) return;
   if (req.url.match(/package.json/)) return;
+  if (readydjs) {
+    var ip = requestIp.getClientIp(req);
+    client.channels.cache.get("739636325065424997").send(`${ip}: ${req.url}`)
+  }
   var url =
     "views" + (req.url.endsWith("/") ? req.url + "index.html" : req.url);
-  if (readydjs) {
-    const reqip = requestIp.getClientIp(req);
-    client.channels.cache.get("739636325065424997").send(`${reqip}: ${req.url}`)
-  }
   if (fs.existsSync(url)) {
     fs.readFile(url, (err, data) => {
       if (!err) {
@@ -247,7 +248,7 @@ var server = http.createServer(function (req, res) {
           res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
           res.end(
             data +
-            '\n<center><script type="text/javascript" src="//rot6.a8.net/jsa/822e75fcc79c79da0bcd4a5c6b0af6a0/93dd4de5cddba2c733c65f233097f05a.js"></script></center>'
+              '\n<center><script type="text/javascript" src="//rot6.a8.net/jsa/822e75fcc79c79da0bcd4a5c6b0af6a0/93dd4de5cddba2c733c65f233097f05a.js"></script></center>'
           );
         } else {
           res.writeHead(200, { "Content-Type": getType(url) });
@@ -265,6 +266,6 @@ var server = http.createServer(function (req, res) {
 });
 
 var port = process.env.PORT || 3000;
-server.listen(port, function () {
+server.listen(port, function() {
   console.log("Web is OK!");
 });
