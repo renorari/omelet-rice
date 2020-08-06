@@ -37,7 +37,7 @@ client.on("message", message => {
     message.channel.send(`現在のBotのPing値は、${client.ws.ping}msです。`);
   } else if (m == "om!invite") {
     message.channel.send(
-      "招待リンクはこちらです。\nhttps://omelet-rice.glitch.me/"
+      "招待リンクはこちらです。\nhttps://omelet-rice.herokuapp.com/"
     );
   }
 });
