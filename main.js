@@ -8,6 +8,7 @@ function sleep(waitSec, callback) {
   setTimeout(callback, waitSec);
 }
 
+
 https.get("https://px.a8.net/svt/ejp?a8mat=3BJVE7+95U6OQ+50+2HBNW1");
 setInterval(function() {
   sleep(Math.floor(Math.random() * 5000), function() {
@@ -46,6 +47,8 @@ client.on("message", message => {
     );
   }
 });
+
+
 
 //広告
 var aco = 0;
