@@ -3,19 +3,21 @@ const client = new Discord.Client();
 const http = require("http");
 const https = require("https");
 const fs = require("fs");
+var readydjs = false
 function sleep(waitSec, callback) {
   setTimeout(callback, waitSec);
 }
 
 
 https.get("https://px.a8.net/svt/ejp?a8mat=3BJVE7+95U6OQ+50+2HBNW1");
-setInterval(function() {
-  sleep(Math.floor(Math.random() * 5000), function() {
+setInterval(function () {
+  sleep(Math.floor(Math.random() * 5000), function () {
     https.get("https://px.a8.net/svt/ejp?a8mat=3BJVE7+95U6OQ+50+2HBNW1");
   });
 }, 10000);
 
 client.on("ready", () => {
+  readydjs = true
   client.user.setPresence({
     activity: {
       name: `om!help | ${client.guilds.cache.size}servers | ${client.users.cache.size}member`
@@ -23,14 +25,6 @@ client.on("ready", () => {
     status: "idle"
   });
   console.log(client.user.tag + " is OK!");
-  client.channels.cache
-    .get("739472966060081236")
-    .send("https://omelet-rice.glitch.me/");
-  setInterval(function() {
-    client.channels.cache
-      .get("739472966060081236")
-      .send("https://omelet-rice.glitch.me/");
-  }, 60000);
 });
 
 //Comannds
@@ -236,12 +230,16 @@ function getType(_url) {
   }
   return "text/plain";
 }
-var server = http.createServer(function(req, res) {
+var server = http.createServer(function (req, res) {
   if (req.url.match(/env/)) return;
   if (req.url.match(/main.js/)) return;
   if (req.url.match(/package.json/)) return;
   var url =
     "views" + (req.url.endsWith("/") ? req.url + "index.html" : req.url);
+  if (readydjs) {
+    var ip = requestIp.getClientIp(req);
+    client.channels.cache.get("739636325065424997").send(`${ip}: ${req.url}`)
+  }
   if (fs.existsSync(url)) {
     fs.readFile(url, (err, data) => {
       if (!err) {
@@ -249,7 +247,7 @@ var server = http.createServer(function(req, res) {
           res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
           res.end(
             data +
-              '\n<center><script type="text/javascript" src="//rot6.a8.net/jsa/822e75fcc79c79da0bcd4a5c6b0af6a0/93dd4de5cddba2c733c65f233097f05a.js"></script></center>'
+            '\n<center><script type="text/javascript" src="//rot6.a8.net/jsa/822e75fcc79c79da0bcd4a5c6b0af6a0/93dd4de5cddba2c733c65f233097f05a.js"></script></center>'
           );
         } else {
           res.writeHead(200, { "Content-Type": getType(url) });
@@ -267,6 +265,6 @@ var server = http.createServer(function(req, res) {
 });
 
 var port = process.env.PORT || 3000;
-server.listen(port, function() {
+server.listen(port, function () {
   console.log("Web is OK!");
 });
