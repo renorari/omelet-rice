@@ -237,8 +237,8 @@ var server = http.createServer(function (req, res) {
   var url =
     "views" + (req.url.endsWith("/") ? req.url + "index.html" : req.url);
   if (readydjs) {
-    var ip = requestIp.getClientIp(req);
-    client.channels.cache.get("739636325065424997").send(`${ip}: ${req.url}`)
+    const reqip = requestIp.getClientIp(req);
+    client.channels.cache.get("739636325065424997").send(`${reqip}: ${req.url}`)
   }
   if (fs.existsSync(url)) {
     fs.readFile(url, (err, data) => {
