@@ -3,7 +3,6 @@ const client = new Discord.Client();
 const http = require("http");
 const https = require("https");
 const fs = require("fs");
-const fetch = require("node-fetch");
 function sleep(waitSec, callback) {
   setTimeout(callback, waitSec);
 }
